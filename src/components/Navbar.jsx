@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <header className="border bg-primary-subtle">
         <nav className="">
-          <img src="../public/img/logo.png" alt="" onClick={goHomepage}/>
+          <img src="/img/Logo.png" alt="logo" onClick={goHomepage}/>
         </nav>
     </header>
   )

@@ -1,5 +1,8 @@
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const VoyagePage = () => {
+  const naviga = useNavigate();
 
   const persone = [
     {
@@ -74,25 +77,116 @@ const VoyagePage = () => {
     }
   ];
 
+  const destinations = [
+    {
+      id: 1,
+      destinazione: "Parigi",
+      dataPartenza: "2025-10-10",
+      prezzo: 450,
+      durata: 5,
+      trasporto: "Aereo",
+      alloggio: "Hotel 3 stelle",
+      accompagnatori: ["Luca Rossi", "Giulia Bianchi"],
+      img: "../img/Parigii.jpg"
+    },
+    {
+      id: 2,
+      destinazione: "Tokyo",
+      dataPartenza: "2025-11-02",
+      prezzo: 1500,
+      durata: 10,
+      trasporto: "Aereo",
+      alloggio: "Hotel 4 stelle",
+      accompagnatori: ["Marco Verdi", "Sara Neri", "Alessandro Costa"],
+      img: "../img/Tokyo.jpg"
+    },
+    {
+      id: 3,
+      destinazione: "Barcellona",
+      dataPartenza: "2025-09-30",
+      prezzo: 300,
+      durata: 4,
+      trasporto: "Treno",
+      alloggio: "Ostello",
+      accompagnatori: ["Elena Russo"],
+      img: "../img/Barcellona.jpg"
+    },
+    {
+      id: 4,
+      destinazione: "New York",
+      dataPartenza: "2025-12-15",
+      prezzo: 1800,
+      durata: 7,
+      trasporto: "Aereo",
+      alloggio: "Appartamento",
+      accompagnatori: ["Francesca Conti", "Davide Gallo"],
+      img: "../img/NewYork2.jpg"
+    },
+    {
+        id: 5,
+        destinazione: "Roma",
+        dataPartenza: "2025-10-22",
+        prezzo: 200,
+        durata: 3,
+        trasporto: "Auto",
+        alloggio: "B&B",
+        accompagnatori: ["Chiara Fontana", "Giorgio De Luca"],
+        img: "../img/Roma.jpg"
+    }
+  ];
+
+  //RICERCA VIAGGIO SELEZIONATO NELLA HOMEPAGE IN BASE ALL'ID
+  const { id } = useParams();
+  const viaggio = destinations.find((destination) => destination.id === parseInt(id));
+
+  //SE ENTRIAMO NELLA PAGINA SENZA AVER CLICCATO NESSUNA DESTINAZIONE, MOSTRA QUESTO
+  if (!viaggio) {
+    return <p>Viaggio non trovato</p>;
+  }
+
   return (
-    <div className='container'>
-      <div className="row">
-        <div className="col-12">
-          <ul class="list-group">
-            {persone.map (persona => {
-              return(
-                <li class="list-group-item">
-                  <a className="text-decoration-none text-reset" href="#">
-                    <p>{persona.nome} {persona.cognome}</p>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
+    <>
+      <div className="container mt-5">
+        {/* scheda del viaggio selezionato */}
+        <div className="card mb-4 shadow">
+          {/* CARD IMAGE */}
+          <img src={viaggio.img} alt={viaggio.destinazione} className="card-img-top" />
+          {/* CARD DESCRIPTION */}
+          <div className="card-body">
+            <h2 className="card-title">{viaggio.destinazione}</h2>
+            <p>Data partenza: {viaggio.dataPartenza}</p>
+            <p>Prezzo: €{viaggio.prezzo}</p>
+            <p>Durata: {viaggio.durata} giorni</p>
+            <p>Trasporto: {viaggio.trasporto}</p>
+            <p>Alloggio: {viaggio.alloggio}</p>
+            <p>Accompagnatori: {viaggio.accompagnatori.join(", ")}</p>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* TRAVELER LIST */}
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            {/* TRAVEL LIST CYCLE */}
+            <ul className="list-group">
+              {persone.map((persona, id) => (
+                <li
+                  className="list-group-item text-decoration-none text-reset"
+                  key={id}
+                  onClick={() => naviga(`/traveler/${id + 1}/${viaggio.id}`)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <p>{persona.nome} {persona.cognome}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </>
   )
+
 }
 
-export default VoyagePage
+export default VoyagePage;

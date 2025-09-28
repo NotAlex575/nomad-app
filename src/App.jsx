@@ -10,10 +10,9 @@ function App() {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/voyage" element={<VoyagePage />}></Route>
-          <Route path="/Ciccio" element={<Traveler></Traveler>}></Route>
+          <Route path="/voyage/:id" element={<VoyagePage />}></Route>
+          <Route path="/traveler/:personaId/:viaggioId" element={<Traveler />} />
             {/*
-            <Route path="/voyage/:id" element={<div>Voyage detail</div>} />
             <Route path="/voyage/add-voyage" element={<div>Add Voyage</div>} />
             */}
         </Route>
